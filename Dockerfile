@@ -34,10 +34,14 @@ COPY package.json .
 COPY yarn.lock .
 RUN set -x && yarn install --frozen-lockfile
 
-ARG RAILS_ENV
-ENV RAILS_ENV ${RAILS_ENV:-development}
-
 COPY Gemfile .
 COPY Gemfile.lock .
 RUN set -x && bundle install --jobs=4
 COPY . .
+
+RUN set -x \
+  && curl https://s3.ap-northeast-1.amazonaws.com/amazon-ssm-ap-northeast-1/latest/debian_amd64/amazon-ssm-agent.deb -o /tmp/amazon-ssm-agent.deb \
+  && dpkg -i /tmp/amazon-ssm-agent.deb \
+  && cp /etc/amazon/ssm/seelog.xml.template /etc/amazon/ssm/seelog.xml
+
+CMD ["./entrypoint.sh"]
