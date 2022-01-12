@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Local Docker - Listen for rdebug-ide",
+      "type": "Ruby",
+      "request": "attach",
+      "cwd": "${workspaceRoot}",
+      "remoteHost": "0.0.0.0",
+      "remotePort": "1234",
+      "remoteWorkspaceRoot": "/usr/src/web",
+      "args": [
+        "server"
+      ]
+    }
+  ]
+}
