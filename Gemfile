@@ -30,11 +30,11 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'ajax_error_renderer'
 gem 'prawn'
 gem 'unicorn'
+gem 'devise'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'devise'
   gem 'pry-rails'
   # gem 'ruby-debug-ide'
   # gem 'debase'
