@@ -39,6 +39,11 @@ COPY Gemfile.lock .
 RUN set -x && bundle install --jobs=4
 COPY . .
 
+ARG RAILS_MASTER_KEY
+ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
+
+ENV RAILS_LOG_TO_STDOUT 1
+
 RUN set -x \
   && curl https://s3.ap-northeast-1.amazonaws.com/amazon-ssm-ap-northeast-1/latest/debian_amd64/amazon-ssm-agent.deb -o /tmp/amazon-ssm-agent.deb \
   && dpkg -i /tmp/amazon-ssm-agent.deb \
