@@ -1,0 +1,12 @@
+.bundle/
+.github/
+config/master.key
+log/
+nginx/
+node_modules/
+tmp/
+vendor/
+.dockerignore
+docker-compose.yml
+Dockerfile
+README.md
