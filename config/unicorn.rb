@@ -4,8 +4,8 @@ working_directory rails_root
 worker_processes 2
 preload_app true
 
-listen "#{rails_root}/tmp/sockets/unicorn.sock"
-pid "#{rails_root}/tmp/pids/unicorn.pid"
+listen "#{rails_root}/tmp/unicorn.sock"
+pid "#{rails_root}/tmp/unicorn.pid"
 
 #ログの出力先を指定
 stderr_path "#{rails_root}/log/unicorn_error.log"
