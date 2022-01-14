@@ -8,5 +8,5 @@ listen "#{rails_root}/tmp/unicorn.sock"
 pid "#{rails_root}/tmp/unicorn.pid"
 
 #ログの出力先を指定
-stderr_path "#{rails_root}/log/unicorn_error.log"
-stdout_path "#{rails_root}/log/unicorn.log"
+# stderr_path "#{rails_root}/log/unicorn_error.log"
+# stdout_path "#{rails_root}/log/unicorn.log"
