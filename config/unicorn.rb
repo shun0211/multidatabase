@@ -7,6 +7,7 @@ preload_app true
 listen "#{rails_root}/tmp/unicorn.sock"
 pid "#{rails_root}/tmp/unicorn.pid"
 
-#ログの出力先を指定
+# ログの出力先を指定
+# これをするとCloud Watchにログが出なくなる
 # stderr_path "#{rails_root}/log/unicorn_error.log"
 # stdout_path "#{rails_root}/log/unicorn.log"
