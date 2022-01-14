@@ -5,8 +5,6 @@ if [ ! -z "${AWS_SSM_AGENT_CODE}" ] && [ ! -z "${AWS_SSM_AGENT_ID}" ]; then
   amazon-ssm-agent &
 fi
 
-env
 bundle exec rails db:migrate
-echo 'rails db:migrateできている'
+bundle exec rails webpacker:compile
 bundle exec unicorn -c config/unicorn.rb
-echo 'rails db:migrateできているjk'
