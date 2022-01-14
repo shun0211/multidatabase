@@ -49,6 +49,8 @@ RUN set -x \
   && dpkg -i /tmp/amazon-ssm-agent.deb \
   && cp /etc/amazon/ssm/seelog.xml.template /etc/amazon/ssm/seelog.xml
 
+VOLUME ["/usr/src/web"]
+
 # container_linux.go:380: starting container process caused: exec: "./entrypoint.sh": permission denied
 RUN chmod +x entrypoint.sh
 CMD ["./entrypoint.sh"]
