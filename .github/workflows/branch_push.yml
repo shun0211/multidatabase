@@ -1,0 +1,68 @@
+name: CI/CD
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy_master:
+    name: Deploy / Master
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-20.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v2
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+      - id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v1
+      - id: rails-image-build
+        env:
+          IMAGE_URI: ${{ steps.ecr-login.outputs.registry }}/ecs-demo:${{ github.sha }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+        run: |-
+          docker build \
+            -t $IMAGE_URI \
+            --build-arg RAILS_ENV=production \
+            --build-arg RAILS_MASTER_KEY=$RAILS_MASTER_KEY \
+            --target=production \
+            --platform=linux/amd64 \
+            .
+          docker push $IMAGE_URI
+          echo "::set-output name=image-uri::$IMAGE_URI"
+      - id: nginx-image-build
+        env:
+          IMAGE_URI: ${{ steps.ecr-login.outputs.registry }}/nginx:${{ github.sha }}
+        run: |-
+          docker build \
+            -t $IMAGE_URI \
+            --platform=linux/amd64 \
+            nginx
+          docker push $IMAGE_URI
+          echo "::set-output name=image-uri::$IMAGE_URI"
+      - name: ecr-logout
+        run: docker logout ${{ steps.ecr-login.outputs.registry }}
+      - id: render-nginx-image-to-task-definition
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: .aws/fargate/ecs-demo-task-definition.json
+          container-name: nginx
+          image: ${{ steps.nginx-image-build.outputs.image-uri }}
+      - name: test
+        run: echo ${{ steps.render-nginx-image-to-task-definition.outputs.task-definition }}
+      - id: render-rails-image-to-task-definition
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          # Nginxのイメージを注入したタスク定義ファイルはtmpディレクトリ以下に置かれるので、それを指定するため、outputs.task-definitionという書き方をする
+          task-definition: ${{ steps.render-nginx-image-to-task-definition.outputs.task-definition }}
+          container-name: web
+          image: ${{ steps.rails-image-build.outputs.image-uri }}
+      - name: Deploy to Amazon ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-rails-image-to-task-definition.outputs.task-definition }}
+          cluster: ecs-demo-cluster
+          service: ecs-demo-service-2
+          wait-for-service-stability: false
