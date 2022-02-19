@@ -50,8 +50,8 @@ jobs:
           task-definition: .aws/fargate/ecs-demo-task-definition.json
           container-name: nginx
           image: ${{ steps.nginx-image-build.outputs.image-uri }}
-      - name: test
-        run: echo ${{ steps.render-nginx-image-to-task-definition.outputs.task-definition }}
+      # - name: test
+      #   run: echo ${{ steps.render-nginx-image-to-task-definition.outputs.task-definition }}
       - id: render-rails-image-to-task-definition
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:

@@ -20,6 +20,8 @@ services:
     build:
       context: .
       target: development
+    image: ecs-demo
+    container_name: ecs-demo-container
     environment:
       RAILS_MASTER_KEY:
       MYSQL_HOST: mysql

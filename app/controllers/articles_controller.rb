@@ -17,7 +17,7 @@ class ArticlesController < ApplicationController
   # GET /articles/new
   def new
     @article = Article.new
-    redirect_back(fallback_location: root_path)
+    # redirect_back(fallback_location: root_path)
   end
 
   # GET /articles/1/edit
@@ -29,8 +29,8 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
     if @article.save
       redirect_to @article, notice: "Article was successfully created."
-      # user = User.last
-      # message = ArticleMailer.with(user: user).notice.message
+      user = User.last
+      ArticleMailer.with(user: user).notice.deliver_later
       # puts message
       # sleep 10
       # ArticleMailer.with(user: User.last).notice.deliver_later

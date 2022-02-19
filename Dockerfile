@@ -1,8 +1,11 @@
 FROM ruby:3.0.2 as development
-SHELL [ "/bin/bash", "-c" ]
+# -e:実行されたコマンドが0でないステータスで終了した場合にスクリプトを終了
+# -o pipeline:パイプでつないだ各コマンドの中で終了ステータスが0以外(正常終了以外)だった場合、最後に0以外だったコマンドの終了ステータスが返される
+SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
 ENV LANG C.UTF-8
 
+# Yarnをインストールするための準備
 RUN set -x \
   && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
   && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
@@ -39,17 +42,10 @@ COPY Gemfile.lock .
 RUN set -x && bundle install --jobs=4
 COPY . .
 
+ARG RAILS_ENV
+ENV RAILS_ENV ${RAILS_ENV:-development}
+
 FROM development as production
-
-ARG RAILS_MASTER_KEY
-ENV RAILS_MASTER_KEY $RAILS_MASTER_KEY
-
-ENV RAILS_LOG_TO_STDOUT 1
-
-# RUN set -x \
-#   && curl https://s3.ap-northeast-1.amazonaws.com/amazon-ssm-ap-northeast-1/latest/debian_amd64/amazon-ssm-agent.deb -o /tmp/amazon-ssm-agent.deb \
-#   && dpkg -i /tmp/amazon-ssm-agent.deb \
-#   && cp /etc/amazon/ssm/seelog.xml.template /etc/amazon/ssm/seelog.xml
 
 VOLUME ["/usr/src/web"]
 
