@@ -6,12 +6,14 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.all
-    # download_pdf
+    @articles = Article.all.includes(comments: :user)
   end
 
   # GET /articles/1 or /articles/1.json
   def show
+    @article = Article.find(params[:id])
+    @comments = @article.comments
+    @comment = @article.comments.build
   end
 
   # GET /articles/new

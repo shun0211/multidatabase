@@ -10,5 +10,22 @@
   <%= @article.content %>
 </p>
 
+<!--
+<% user = User.first %>
+<div class="container">
+  <% @comments.each do |comment| %>
+    <p>
+      <%= comment.content %>
+      <%= comment.is_comment_by?(user) ? '✓' : '✗' %>
+    </p>
+  <% end %>
+</div>
+-->
+
+<%= form_with model: @comment, url: article_comments_path(@article), method: :post do |f| %>
+  <%= f.text_field :content %>
+  <%= f.submit 'コメントする' %>
+<% end %>
+
 <%= link_to 'Edit', edit_article_path(@article) %> |
 <%= link_to 'Back', articles_path %>

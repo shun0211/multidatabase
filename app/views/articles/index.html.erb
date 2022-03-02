@@ -1,3 +1,4 @@
+<% user = User.first %>
 <p id="notice"><%= notice %></p>
 
 <h1>Articles</h1>
@@ -20,6 +21,7 @@
         <td><%= link_to 'Edit', edit_article_path(article) %></td>
         <td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      <p><%= article.commented_by?(user) %></p>
     <% end %>
   </tbody>
 </table>

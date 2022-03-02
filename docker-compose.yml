@@ -47,7 +47,7 @@ services:
     platform: linux/amd64
     ports:
       - '1080:1080'
-      - '1020:1025'
+      - '1025:1025'
 volumes:
   mysql:
   bundle:
