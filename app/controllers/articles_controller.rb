@@ -6,14 +6,23 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.all.includes(comments: :user)
+    @articles = Article.includes(:public_comments)
+
+    # @articles = Comment
+    #   .default_comments
+    #   .group(:article_id)
+    #   .includes(:article)
+    #   .select(:article_id, 'count(*) as c')
+    #   .order(c: :desc)
+    #   .map{_1.article}
   end
 
   # GET /articles/1 or /articles/1.json
   def show
     @article = Article.find(params[:id])
     @comments = @article.comments
-    @comment = @article.comments.build
+
+    @html = "#{@article.title}"
   end
 
   # GET /articles/new
