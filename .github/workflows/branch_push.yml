@@ -8,7 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: test12
+          ref: test13
+      - run: git checkout test13
       - name: Show github properties
         run: |
           echo ${{ github.workflow }}
