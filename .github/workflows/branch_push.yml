@@ -15,11 +15,11 @@ jobs:
           echo ${{ github.ref }}
           echo ${{ github.sha }}
           echo ${{ github.event.before }}
-          echo ${{ github.event.payload }}
-          echo ${{ github.event.payload.commits[0].sha }}
-          echo ${{ github.event.payload.commits[0].message }}
-          echo "${{ toJson(github) }}"
+          echo "${{ github.event.commits[0].id }}"
           echo "${{ toJson(github.event) }}"
+          echo '--------------------'
+          echo "${{ toJson(github) }}"
+          echo '--------------------'
           echo "${{ toJson(github.event.commits) }}"
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
