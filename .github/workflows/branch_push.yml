@@ -12,7 +12,7 @@ jobs:
           echo ${{ github.ref }}
           echo ${{ github.sha }}
           echo ${{ github.event.before }}
-          echo ${{ github.event.pull_request.head.sha }}
+          echo ${{ github.event.commits[0].sha }}
           echo ${{ github.event.push.head.sha }}
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
