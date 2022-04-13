@@ -14,7 +14,6 @@ jobs:
           echo ${{ github.event.before }}
           echo ${{ github.event.commits }}
           echo ${{ github.event.commits[0].sha }}
-          echo ${{ github.event.commits[][sha] }}
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
     # runs-on: ubuntu-20.04
