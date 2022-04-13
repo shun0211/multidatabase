@@ -8,18 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: test15
-      - name: test
-        run: |
-          git checkout test15
-          echo ${{ github.workflow }}
-          echo ${{ github.ref }}
-          echo ${{ github.sha }}
-          echo ${{ github.event.before }}
-          echo ${{ github.event.payload }}
-          echo ${{ github.event.payload.commits[0].sha }}
-          echo ${{ github.event.payload.commits[0].message }}
-          echo "${{ toJson(github) }}"
+          ref: test17
       - name: Show github properties
         run: |
           echo ${{ github.workflow }}
