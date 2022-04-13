@@ -1,8 +1,6 @@
 name: CI/CD
 on:
   push:
-    branches:
-      - main
 jobs:
   deploy_master:
     name: demo
@@ -16,9 +14,6 @@ jobs:
           echo ${{ github.event.before }}
           echo ${{ github.event.pull_request.head.sha }}
           echo ${{ github.event.push.head.sha }}
-      - name: Debug
-        if: ${{ always() }}
-        uses: mxschmitt/action-tmate@v3
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
     # runs-on: ubuntu-20.04
