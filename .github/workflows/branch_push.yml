@@ -19,6 +19,7 @@ jobs:
           echo ${{ github.event.payload }}
           echo ${{ github.event.payload.commits[0].sha }}
           echo ${{ github.event.payload.commits[0].message }}
+          echo "${{ toJson(github) }}"
       - name: Show github properties
         run: |
           echo ${{ github.workflow }}
@@ -28,6 +29,7 @@ jobs:
           echo ${{ github.event.payload }}
           echo ${{ github.event.payload.commits[0].sha }}
           echo ${{ github.event.payload.commits[0].message }}
+          echo "${{ toJson(github) }}"
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
     # runs-on: ubuntu-20.04
