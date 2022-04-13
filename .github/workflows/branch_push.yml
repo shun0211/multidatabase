@@ -16,8 +16,8 @@ jobs:
           echo ${{ github.sha }}
           echo ${{ github.event.before }}
           echo ${{ github.event.commits.*.id }}
-          echo ${{ github.event.size }}
-          echo ${{ github.event.commits.*.id[1] }}
+          echo ${{ github.event.commits.size }}
+          echo ${{ github.event.commits.*.id[0] }}
           echo "${{ toJson(github.event.commits) }}"
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
