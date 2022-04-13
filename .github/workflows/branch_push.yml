@@ -19,6 +19,7 @@ jobs:
           echo ${{ github.event.payload.commits[0].sha }}
           echo ${{ github.event.payload.commits[0].message }}
           echo "${{ toJson(github) }}"
+          echo "${{ toJson(github.event) }}"
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
     # runs-on: ubuntu-20.04
