@@ -8,8 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
-
+          ref: test12
       - name: Show github properties
         run: |
           echo ${{ github.workflow }}
