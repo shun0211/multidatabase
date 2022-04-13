@@ -6,7 +6,10 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.includes(:public_comments)
+    @articles = Article.all.order(Arel.sql('priority IS NULL ASC, priority ASC'))
+    # @articles = Article.all.order(Arel.sql('priority IS NULL ASC, priority ASC'))
+    # @articles = Article.all.order(Arel.sql('CASE WHEN priority IS NULL THEN 1 ELSE 0 END, priority ASC'))
+    # @articles = Article.all.order(Arel.sql('ifnull(priority, 2147483647) ASC'))
 
     # @articles = Comment
     #   .default_comments

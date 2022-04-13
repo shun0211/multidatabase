@@ -8,6 +8,12 @@ class Article < ApplicationRecord
   scope :recent, -> { where("created_at > '#{3.days.ago}'") }
   scope :public_articles, -> { where(is_public: true) }
 
+  enum priority: {
+    important: 10,
+    normal: 20,
+    light: 30
+  }
+
   def self.public_articles
     where(is_public: true) if false
   end
