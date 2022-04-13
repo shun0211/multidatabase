@@ -8,9 +8,17 @@ jobs:
     name: demo
     runs-on: ubuntu-20.04
     steps:
-      - name: Debug
-        if: ${{ always() }}
-        uses: mxschmitt/action-tmate@v3
+      # - name: Debug
+      #   if: ${{ always() }}
+      #   uses: mxschmitt/action-tmate@v3
+      - name: Show github properties
+        run: |
+          echo ${{ github.workflow }}
+          echo ${{ github.ref }}
+          echo ${{ github.sha }}
+          echo ${{ github.event.before }}
+          echo ${{ github.event.pull_request.head.sha }}
+          echo ${{ github.event.push.head.sha }}
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
     # runs-on: ubuntu-20.04
