@@ -6,10 +6,10 @@ jobs:
     name: demo
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
-          ref: test13
-      - run: git checkout test13
+          ref: test14
+      - run: git checkout test14
       - name: Show github properties
         run: |
           echo ${{ github.workflow }}
