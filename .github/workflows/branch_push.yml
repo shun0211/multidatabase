@@ -16,6 +16,10 @@ jobs:
           echo ${{ github.sha }}
           echo ${{ github.event.before }}
           echo "${{ github.event.commits[0].id }}"
+          echo '--------------------'
+          echo "${{ toJson(github.event.pull_request) }}"
+          echo "${{ toJson(github.event.push) }}"
+          echo '---------------------'
           echo "${{ toJson(github.event) }}"
           echo '--------------------'
           echo "${{ toJson(github) }}"
