@@ -1,6 +1,6 @@
 name: CI/CD
 on:
-  push:
+  pull_request:
 jobs:
   deploy_master:
     name: demo
@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: test17
+          ref: test20
       - name: Show github properties
         run: |
           echo ${{ github.workflow }}
