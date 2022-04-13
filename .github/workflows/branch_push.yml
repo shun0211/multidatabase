@@ -5,9 +5,12 @@ on:
       - main
 jobs:
   deploy_master:
-    - name: Debug
-      if: ${{ always() }}
-      uses: mxschmitt/action-tmate@v3
+    name: demo
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Debug
+        if: ${{ always() }}
+        uses: mxschmitt/action-tmate@v3
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
     # runs-on: ubuntu-20.04
