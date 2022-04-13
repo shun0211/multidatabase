@@ -8,18 +8,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 2
+          fetch-depth: 0
+
       - name: Show github properties
         run: |
           echo ${{ github.workflow }}
           echo ${{ github.ref }}
           echo ${{ github.sha }}
           echo ${{ github.event.before }}
-          echo ${{ github.event.commits }}
-          echo ${{ github.event.commits[0].sha }}
-          echo ${{ github.event.commits[0].message }}
-          echo ${{ github.event.head_commit.message }}
-          echo ${{ github.event.head_commit.sha }}
+          echo ${{ github.event.payload }}
+          echo ${{ github.event.payload.commits[0].sha }}
+          echo ${{ github.event.payload.commits[0].message }}
     # name: Deploy / Master
     # if: github.ref == 'refs/heads/main'
     # runs-on: ubuntu-20.04
