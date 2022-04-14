@@ -27,3 +27,9 @@ test:
 
 production:
   <<: *default
+  primary:
+    database: <%= ENV["MYSQL_DATABASE"] %>
+    migrations_paths: "db/migrate/primary"
+  sirius:
+    database: <%= ENV["MYSQL_MASTER_DATABASE"] %>
+    migrations_paths: "db/migrate/second"
