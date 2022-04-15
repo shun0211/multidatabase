@@ -15,9 +15,20 @@ default: &default
   password: <%= ENV["MYSQL_PASSWORD"] %>
   database: <%= ENV["MYSQL_DATABASE"] %>
   port: 3310
+  socket: /tmp/mysql.sock
 
 development:
-  <<: *default
+  primary:
+    <<: *default
+    migrations_paths: "db/migrate/primary"
+  secondary:
+    <<: *default
+    database: demosecondary_db
+    host: mysql_secondary
+    username: root
+    password: password
+    migrations_paths: "db/migrate/secondary"
+    port: 3320
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -27,9 +38,3 @@ test:
 
 production:
   <<: *default
-  primary:
-    database: <%= ENV["MYSQL_DATABASE"] %>
-    migrations_paths: "db/migrate/primary"
-  sirius:
-    database: <%= ENV["MYSQL_MASTER_DATABASE"] %>
-    migrations_paths: "db/migrate/second"

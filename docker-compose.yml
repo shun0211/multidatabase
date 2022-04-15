@@ -16,13 +16,13 @@ services:
     image: mysql:5.7
     platform: linux/amd64
     ports:
-      - 3320:3306
+      - 3320:3320
     volumes:
       - mysql_secondary:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: demosecondary_db
-      MYSQL_TCP_PORT: 3306
+      MYSQL_TCP_PORT: 3320
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
   web:
     hostname: web
@@ -37,10 +37,14 @@ services:
     container_name: ecs-demo-container
     environment:
       RAILS_MASTER_KEY:
+      MYSQL_DATABASE: demo_db
       MYSQL_HOST: mysql
       MYSQL_USERNAME: root
       MYSQL_PASSWORD: password
-      MYSQL_DATABASE: demo_db
+      MYSQL_SECONDARY_DATABASE: demosecondary_db
+      MYSQL_SECONDARY_HOST: mysql_secondary
+      MYSQL_SECONDARY_USERNAME: root
+      MYSQL_SECONDARY_PASSWORD: password
     ports:
       - '3000:3000'
       # vscodeでデバッグする際に使用
@@ -51,7 +55,7 @@ services:
       - bundle:/usr/local/bundle
       - /usr/src/web/node_modules
       - /usr/src/web/tmp/cache
-    entrypoint: dockerize -timeout 60s -wait tcp://mysql:3310
+    entrypoint: dockerize -timeout 60s -wait tcp://mysql:3310 -wait tcp://mysql_secondary:3320
     command: bash -c "rm -f tmp/pids/server.pid && bin/rails s -p 3000 -b '0.0.0.0'"
     # vscodeでデバッグする際のコマンド
     # command: bash -c "rm -f tmp/pids/server.pid && bundle exec rdebug-ide --host 0.0.0.0 --port 1234 --dispatcher-port 26162 -- bin/rails s -p 3000 -b '0.0.0.0'"
